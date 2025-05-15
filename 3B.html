@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>3° "B" - U.E. Sócrates Villazón</title>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-title">
+                <h1>Curso: 3° "B"</h1>
+            </div>
+            <div class="user-profile">
+                <div id="user-profile" class="profile-dropdown">
+                    <button class="profile-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">Usuario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="../profile.html"><i class="fas fa-user"></i> Ver Perfil</a>
+                        <a href="../settings.html"><i class="fas fa-cog"></i> Configuración</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="../schedule.html"><i class="fas fa-calendar"></i> Horario</a></li>
+                <li id="teacherPanelLink" style="display: none;">
+                    <a href="../teacher_panel.html"><i class="fas fa-user-graduate"></i> Panel Docente</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="course-content">
+            <section class="course-info">
+                <h2>Información del Curso</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-users"></i> Estudiantes</h3>
+                        <p>Cantidad de estudiantes: 30</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-book"></i> Materias</h3>
+                        <ul class="subjects-list">
+                            <li>Matemáticas</li>
+                            <li>Lenguaje</li>
+                            <li>Ciencias Naturales</li>
+                            <li>Ciencias Sociales</li>
+                            <li>Educación Física</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="course-materials">
+                <h2>Materiales y Recursos</h2>
+                <div class="materials-grid">
+                    <div class="material-card">
+                        <h3>Tareas</h3>
+                        <ul id="homework-list">
+                            <!-- Las tareas se cargarán dinámicamente -->
+                        </ul>
+                    </div>
+                    <div class="material-card">
+                        <h3>Recursos</h3>
+                        <ul id="resources-list">
+                            <!-- Los recursos se cargarán dinámicamente -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>&copy; 2025 U.E. Técnico Humanístico Sócrates Villazón</p>
+                <p>Dirección: [Bolivia Cochambamba Colomi]</p>
+                <p>Teléfono: [+591 67546815]</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Función para verificar el estado de autenticación
+    function checkAuthStatus() {
+        const userSession = localStorage.getItem('userSession');
+        if (userSession) {
+            const user = JSON.parse(userSession);
+            document.getElementById('userName').textContent = user.name;
+            
+            // Mostrar/ocultar panel docente según el rol
+            if (user.role === 'teacher' || user.role === 'admin') {
+                document.getElementById('teacherPanelLink').style.display = 'block';
+            }
+        } else {
+            window.location.href = '../auth.html';
+        }
+    }
+
+    // Función para cerrar sesión
+    function logout() {
+        localStorage.removeItem('userSession');
+        window.location.href = '../auth.html';
+    }
+
+    // Verificar estado de autenticación al cargar la página
+    document.addEventListener('DOMContentLoaded', checkAuthStatus);
+    </script>
+</body>
+</html> 

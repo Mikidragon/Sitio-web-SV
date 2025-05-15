@@ -1,0 +1,208 @@
+/* Variables */
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #4f46e5;
+    --success-color: #22c55e;
+    --danger-color: #ef4444;
+    --text-color: #1e293b;
+    --background-light: #f1f5f9;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 8px 12px rgba(0, 0, 0, 0.15);
+    --shadow-heavy: 0 12px 16px rgba(0, 0, 0, 0.2);
+    --radius: 1rem;
+    --transition: all 0.3s ease;
+}
+
+/* Configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Header */
+.header-container {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: var(--shadow-heavy);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.header-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+    );
+    pointer-events: none;
+}
+
+/* Navegación principal */
+.main-nav {
+    background: var(--card-bg);
+    box-shadow: var(--shadow-medium);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: var(--radius);
+}
+
+.nav-list {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-list a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.nav-list a:hover {
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dashboard */
+.teacher-dashboard {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    width: 100%;
+    perspective: 1000px;
+}
+
+/* Tarjetas */
+.dashboard-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition);
+    transform-style: preserve-3d;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px) translateZ(10px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Cabeceras de tarjetas */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-header h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* Botones de acción */
+.action-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.5rem;
+    transform-style: preserve-3d;
+}
+
+.action-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px) translateZ(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Efectos 3D y hover */
+.profile-btn {
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transform-style: preserve-3d;
+}
+
+.profile-btn:hover {
+    transform: translateY(-2px) translateZ(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-list {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-container {
+        padding: 1rem;
+    }
+}
+
+/* Animaciones */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.refresh-btn {
+    animation: float 3s ease-in-out infinite;
+}

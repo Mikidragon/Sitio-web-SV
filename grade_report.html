@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Libretas Electrónicas - U.E. Sócrates Villazón</title>
+</head>
+<body class="grade-report-page">
+    <header>
+        <!-- Header similar al panel de docente -->
+    </header>
+
+    <main class="grade-report-container">
+        <div class="report-header">
+            <h1>Libretas Electrónicas</h1>
+            <div class="report-actions">
+                <button class="action-btn" onclick="saveGrades()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <button class="action-btn" onclick="publishGrades()">
+                    <i class="fas fa-paper-plane"></i> Publicar
+                </button>
+            </div>
+        </div>
+
+        <div class="grade-form-container">
+            <div class="form-controls">
+                <div class="control-group">
+                    <label for="courseSelect">Curso:</label>
+                    <select id="courseSelect" onchange="loadStudents()">
+                        <option value="">Seleccionar Curso</option>
+                        <!-- Cursos de Primero -->
+                        <optgroup label="Primer Año">
+                            <option value="1A">1° "A"</option>
+                            <option value="1B">1° "B"</option>
+                        </optgroup>
+                        <!-- Cursos de Segundo -->
+                        <optgroup label="Segundo Año">
+                            <option value="2A">2° "A"</option>
+                            <option value="2B">2° "B"</option>
+                        </optgroup>
+                        <!-- Cursos de Tercero -->
+                        <optgroup label="Tercer Año">
+                            <option value="3A">3° "A"</option>
+                            <option value="3B">3° "B"</option>
+                        </optgroup>
+                        <!-- Cursos de Cuarto -->
+                        <optgroup label="Cuarto Año">
+                            <option value="4A">4° "A"</option>
+                            <option value="4B">4° "B"</option>
+                        </optgroup>
+                        <!-- Cursos de Quinto -->
+                        <optgroup label="Quinto Año">
+                            <option value="5A">5° "A"</option>
+                            <option value="5B">5° "B"</option>
+                        </optgroup>
+                        <!-- Cursos de Sexto -->
+                        <optgroup label="Sexto Año">
+                            <option value="6A">6° "A"</option>
+                            <option value="6B">6° "B"</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="subjectSelect">Materia:</label>
+                    <select id="subjectSelect" onchange="loadGradeTemplate()">
+                        <option value="">Seleccionar Materia</option>
+                        <!-- Campos de Saberes y Conocimientos -->
+                        <optgroup label="Cosmos y Pensamiento">
+                            <option value="COSMO1">Valores, Espiritualidad y Religiones</option>
+                            <option value="COSMO2">Filosofía y Cosmovisiones</option>
+                        </optgroup>
+                        
+                        <optgroup label="Comunidad y Sociedad">
+                            <option value="COM1">Comunicación y Lenguajes (Lengua Castellana)</option>
+                            <option value="COM2">Comunicación y Lenguajes (Lengua Originaria)</option>
+                            <option value="COM3">Comunicación y Lenguajes (Lengua Extranjera)</option>
+                            <option value="COM4">Ciencias Sociales</option>
+                            <option value="COM5">Educación Musical</option>
+                            <option value="COM6">Artes Plásticas y Visuales</option>
+                            <option value="COM7">Educación Física y Deportes</option>
+                        </optgroup>
+
+                        <optgroup label="Vida, Tierra y Territorio">
+                            <option value="VTT1">Biología</option>
+                            <option value="VTT2">Geografía</option>
+                            <option value="VTT3">Física</option>
+                            <option value="VTT4">Química</option>
+                        </optgroup>
+
+                        <optgroup label="Ciencia, Tecnología y Producción">
+                            <option value="CTP1">Matemática</option>
+                            <option value="CTP2">Técnica Tecnológica</option>
+                            <option value="CTP3">Informática</option>
+                        </optgroup>
+
+                        <!-- Materias Técnicas -->
+                        <optgroup label="Formación Técnica">
+                            <option value="TEC1">Gastronomia</option>
+                            <option value="TEC2">Mecánica Industrial</option>
+                            <option value="TEC3">Sistemas Informáticos</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="periodSelect">Período:</label>
+                    <select id="periodSelect">
+                        <option value="1">Primer Trimestre</option>
+                        <option value="2">Segundo Trimestre</option>
+                        <option value="3">Tercer Trimestre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grades-table-container">
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Estudiante</th>
+                            <th>Ser (15%)</th>
+                            <th>Saber (35%)</th>
+                            <th>Hacer (35%)</th>
+                            <th>Decidir (15%)</th>
+                            <th>Promedio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grade-summary">
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Promedio del Curso:</span>
+                        <span class="stat-value" id="courseAverage">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Estudiantes Aprobados:</span>
+                        <span class="stat-value" id="passedCount">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Estudiantes Reprobados:</span>
+                        <span class="stat-value" id="failedCount">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/grade_report.js"></script>
+</body>
+</html> 

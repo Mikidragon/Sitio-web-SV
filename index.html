@@ -1,0 +1,258 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="stylesheet" href="estilos.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  
+    <title>U.E. Sócrates Villazón - Portal Educativo</title>  
+</head>  
+<body>  
+    <header class="header">  
+        <div class="header-container">  
+            <div class="user-profile">  
+                <!-- Perfil de usuario -->  
+                <div id="guest-actions" class="profile-actions">  
+                    <a href="../auth.html" class="login-link">  
+                        <i class="fas fa-sign-in-alt"></i>  
+                        <span>Iniciar Sesión</span>  
+                    </a>  
+                </div>  
+                <div id="user-profile" class="profile-dropdown" style="display: none;">  
+                    <button class="profile-btn">  
+                        <i class="fas fa-user-circle"></i>  
+                        <span id="userName">Usuario</span>  
+                        <i class="fas fa-chevron-down"></i>  
+                    </button>  
+                    <div class="dropdown-content">  
+                        <a href="profile.html"><i class="fas fa-user"></i> Ver Perfil</a>  
+                        <a href="settings.html"><i class="fas fa-cog"></i> Configuración</a>  
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>  
+                    </div>  
+                </div>  
+            </div>  
+            <div class="logo-title">  
+                <img src="socrates villazon.png" alt="Logo" class="school-logo">  
+                <h1 class="school-title">U.E. Técnico Humanístico Sócrates Villazón</h1>  
+            </div>  
+        </div>  
+        <nav class="main-nav">  
+            <ul class="nav-list">  
+                <li class="nav-item">  
+                    <a href="index.html" class="nav-link active">  
+                        <i class="fas fa-home"></i>  
+                        Inicio  
+                    </a>  
+                </li>  
+                <li class="nav-item">  
+                    <a href="schedule.html" class="nav-link">  
+                        <i class="fas fa-calendar-alt"></i>  
+                        Horario  
+                    </a>  
+                </li>  
+                <li class="nav-item">  
+                    <a href="staff.html" class="nav-link">  
+                        <i class="fas fa-chalkboard-teacher"></i>  
+                        Plantel Docente  
+                    </a>  
+                </li>  
+                <li class="nav-item">  
+                    <a href="news.html" class="nav-link">  
+                        <i class="fas fa-newspaper"></i>  
+                        Noticias  
+                    </a>  
+                </li>  
+                <li class="nav-item" id="teacherPanelLink" style="display: none;">  
+                    <a href="teacher_panel.html" class="nav-link">  
+                        <i class="fas fa-user-graduate"></i>  
+                        Panel Docente  
+                    </a>  
+                </li>  
+            </ul>  
+        </nav>  
+    </header>  
+
+    <main class="main-content">  
+        <section class="hero-section">  
+            <div class="hero-content">  
+                <div class="hero-text">  
+                    <h2 class="hero-title">Bienvenido al Portal Educativo</h2>  
+                    <p class="hero-subtitle">Formando líderes del mañana con excelencia académica y valores humanos</p>  
+                    <div class="cta-buttons">  
+                        <a href="#courses" class="btn-primary">Ver Cursos</a>  
+                        <a href="admission.html" class="btn-secondary">Admisiones</a>  
+                    </div>  
+                </div>  
+            </div>  
+        </section>  
+
+        <section id="courses" class="courses-section">  
+            <div class="courses-grid">  
+                <!-- Curso 1 -->  
+                <article class="course-card">  
+                    <div class="course-content">  
+                        <h3 class="course-title">1° Año</h3>  
+                        <div class="course-links">  
+                            <a href="courses/1A.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección A  
+                            </a>  
+                            <a href="courses/1B.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección B  
+                            </a>  
+                        </div>  
+                    </div>  
+                </article>  
+                <!-- Curso 2 -->  
+                <article class="course-card">  
+                    <div class="course-content">  
+                        <h3 class="course-title">2° Año</h3>  
+                        <div class="course-links">  
+                            <a href="courses/2A.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección A  
+                            </a>  
+                            <a href="courses/2B.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección B  
+                            </a>  
+                        </div>  
+                    </div>  
+                </article>  
+                <!-- Curso 3 -->  
+                <article class="course-card">  
+                    <div class="course-content">  
+                        <h3 class="course-title">3° Año</h3>  
+                        <div class="course-links">  
+                            <a href="courses/3A.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección A  
+                            </a>  
+                            <a href="courses/3B.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección B  
+                            </a>  
+                        </div>  
+                    </div>  
+                </article>  
+                <!-- Curso 4 -->  
+                <article class="course-card">  
+                    <div class="course-content">  
+                        <h3 class="course-title">4° Año</h3>  
+                        <div class="course-links">  
+                            <a href="courses/4A.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección A  
+                            </a>  
+                            <a href="courses/4B.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección B  
+                            </a>  
+                        </div>  
+                    </div>  
+                </article>  
+                <!-- Curso 5 -->  
+                <article class="course-card">  
+                    <div class="course-content">  
+                        <h3 class="course-title">5° Año</h3>  
+                        <div class="course-links">  
+                            <a href="courses/5A.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección A  
+                            </a>  
+                            <a href="courses/5B.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección B  
+                            </a>  
+                        </div>  
+                    </div>  
+                </article>  
+                <!-- Curso 6 -->  
+                <article class="course-card">  
+                    <div class="course-content">  
+                        <h3 class="course-title">6° Año</h3>  
+                        <div class="course-links">  
+                            <a href="courses/6A.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección A  
+                            </a>  
+                            <a href="courses/6B.html" class="course-link">  
+                                <i class="fas fa-users"></i>  
+                                Sección B  
+                            </a>  
+                        </div>  
+                    </div>  
+                </article>  
+            </div>  
+        </section>  
+
+        <!-- Sección de características -->  
+        <section class="features-section">  
+            <div class="features-grid">  
+                <div class="feature-card">  
+                    <i class="fas fa-medal feature-icon"></i>  
+                    <h3 class="feature-title">Excelencia Académica</h3>  
+                    <p class="feature-text">Educación de calidad con profesores altamente calificados</p>  
+                </div>  
+                <div class="feature-card">  
+                    <i class="fas fa-laptop feature-icon"></i>  
+                    <h3 class="feature-title">Tecnología Moderna</h3>  
+                    <p class="feature-text">Infraestructura tecnológica actualizada para el aprendizaje</p>  
+                </div>  
+                <div class="feature-card">  
+                    <i class="fas fa-heart feature-icon"></i>  
+                    <h3 class="feature-title">Valores Humanos</h3>  
+                    <p class="feature-text">Formación integral basada en principios y valores</p>  
+                </div>  
+            </div>  
+        </section>  
+    </main>  
+
+    <footer class="site-footer">  
+        <div class="footer-content">  
+            <div class="footer-grid">  
+                <div class="footer-section">  
+                    <h3>Contacto</h3>  
+                    <ul class="contact-list">  
+                        <li><i class="fas fa-map-marker-alt"></i> Bolivia, Cochambamba Colomi</li>  
+                        <li><i class="fas fa-phone"></i> +591 67546815</li>  
+                        <li><i class="fas fa-envelope"></i> info@socratesvillazon.edu.bo</li>  
+                    </ul>  
+                </div>  
+                <div class="footer-section">  
+                    <h3>Enlaces Rápidos</h3>  
+                    <ul class="quick-links">  
+                        <li><a href="about.html">Sobre Nosotros</a></li>  
+                        <li><a href="admission.html">Admisiones</a></li>  
+                        <li><a href="calendar.html">Calendario Académico</a></li>  
+                        <li><a href="contact.html">Contáctanos</a></li>  
+                    </ul>  
+                </div>  
+                <div class="footer-section">  
+                    <h3>Síguenos</h3>  
+                    <div class="social-links">  
+                        <a href="#" class="social-link">  
+                            <i class="fab fa-facebook"></i>  
+                        </a>  
+                        <a href="#" class="social-link">  
+                            <i class="fab fa-twitter"></i>  
+                        </a>  
+                        <a href="#" class="social-link">  
+                            <i class="fab fa-instagram"></i>  
+                        </a>  
+                    </div>  
+                </div>  
+            </div>  
+            <div class="footer-bottom">  
+                <p class="copyright-text">  
+                    &copy; 2025 U.E. Técnico Humanístico Sócrates Villazón. Todos los derechos reservados.  
+                </p>  
+            </div>  
+        </div>  
+    </footer>  
+
+    <script src="script.js"></script>  
+</body>  
+</html>

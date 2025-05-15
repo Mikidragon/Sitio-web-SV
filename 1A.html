@@ -1,0 +1,138 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <meta name="description" content="Página oficial del curso 1° 'A' de la U.E. Sócrates Villazón">  
+    <link rel="stylesheet" href="../estilo.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">  
+    <title>1° "A" - U.E. Sócrates Villazón</title>  
+</head>  
+<body>  
+    <header class="header-container">  
+        <div class="logo-title">  
+            <h1>Curso: 1° "A"</h1>  
+        </div>  
+        <div class="user-profile">  
+            <div id="user-profile" class="profile-dropdown" role="menu">  
+                <button class="profile-btn" aria-haspopup="true" aria-expanded="false">  
+                    <i class="fas fa-user-circle"></i>  
+                    <span id="userName">Usuario</span>  
+                    <i class="fas fa-chevron-down"></i>  
+                </button>  
+                <div class="dropdown-content" role="menu">  
+                    <a href="../profile.html" role="menuitem"><i class="fas fa-user"></i> Ver Perfil</a>  
+                    <a href="../settings.html" role="menuitem"><i class="fas fa-cog"></i> Configuración</a>  
+                    <a href="#" onclick="logout()" role="menuitem"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>  
+                </div>  
+            </div>  
+        </div>  
+        <nav class="main-nav">  
+            <ul role="menubar">  
+                <li role="none">  
+                    <a href="../index.html" role="menuitem"><i class="fas fa-home"></i> Inicio</a>  
+                </li>  
+                <li role="none">  
+                    <a href="../schedule.html" role="menuitem"><i class="fas fa-calendar"></i> Horario</a>  
+                </li>  
+                <li id="teacherPanelLink" style="display: none;" role="none">  
+                    <a href="../teacher_panel.html" role="menuitem"><i class="fas fa-user-graduate"></i> Panel Docente</a>  
+                </li>  
+            </ul>  
+        </nav>  
+    </header>  
+
+    <main class="main-content">  
+        <section class="course-info">  
+            <h2>Información del Curso</h2>  
+            <div class="info-grid">  
+                <article class="info-card">  
+                    <h3><i class="fas fa-users"></i> Estudiantes</h3>  
+                    <p>Cantidad de estudiantes: 30</p>  
+                </article>  
+                <article class="info-card">  
+                    <h3><i class="fas fa-book"></i> Materias</h3>  
+                    <ul class="subjects-list" role="list">  
+                        <li role="listitem">Matemáticas</li>  
+                        <li role="listitem">Lenguaje</li>  
+                        <li role="listitem">Ciencias Naturales</li>  
+                        <li role="listitem">Ciencias Sociales</li>  
+                        <li role="listitem">Educación Física</li>  
+                    </ul>  
+                </article>  
+            </div>  
+        </section>  
+
+        <section class="course-materials">  
+            <h2>Materiales y Recursos</h2>  
+            <div class="materials-grid">  
+                <article class="material-card">  
+                    <h3>Tareas</h3>  
+                    <ul id="homework-list" role="list" aria-label="Lista de tareas">  
+                        <!-- Las tareas se cargarán dinámicamente -->  
+                    </ul>  
+                </article>  
+                <article class="material-card">  
+                    <h3>Recursos</h3>  
+                    <ul id="resources-list" role="list" aria-label="Lista de recursos">  
+                        <!-- Los recursos se cargarán dinámicamente -->  
+                    </ul>  
+                </article>  
+            </div>  
+        </section>  
+    </main>  
+
+    <footer class="footer">  
+        <div class="footer-content">  
+            <div class="footer-info">  
+                <p>&copy; 2025 U.E. Técnico Humanístico Sócrates Villazón</p>  
+                <p>Dirección: [Bolivia Cochambamba Colomi]</p>  
+                <p>Teléfono: [+591 67546815]</p>  
+            </div>  
+        </div>  
+    </footer>  
+
+    <script>  
+    document.addEventListener('DOMContentLoaded', function() {  
+        // Función para verificar el estado de autenticación  
+        function checkAuthStatus() {  
+            const userSession = localStorage.getItem('userSession');  
+            if (userSession) {  
+                const user = JSON.parse(userSession);  
+                document.getElementById('userName').textContent = user.name;  
+                
+                // Mostrar/ocultar panel docente según el rol  
+                if (user.role === 'teacher' || user.role === 'admin') {  
+                    document.getElementById('teacherPanelLink').style.display = 'list-item';  
+                }  
+            }  
+        }  
+
+        // Verificar estado de autenticación al cargar la página  
+        checkAuthStatus();  
+
+        // Mejora la accesibilidad del menú desplegable  
+        document.getElementById('user-profile').addEventListener('click', function(e) {  
+            const dropdown = this.querySelector('.dropdown-content');  
+            const wasOpen = dropdown.classList.contains('show');  
+            document.querySelectorAll('.dropdown-content').forEach(menuItem => {  
+                menuItem.classList.remove('show');  
+            });  
+            if (!wasOpen) {  
+                dropdown.classList.add('show');  
+            }  
+        });  
+
+        // Cerrar menú desplegable al hacer click fuera  
+        document.addEventListener('click', function(event) {  
+            if (!event.target.closest('.profile-dropdown')) {  
+                document.querySelectorAll('.dropdown-content').forEach(dropdown => {  
+                    dropdown.classList.remove('show');  
+                });  
+            }  
+        });  
+    });  
+    </script>  
+</body>  
+</html>

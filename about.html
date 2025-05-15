@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - Escuela Primaria</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <header class="header-container">
+        <div class="logo-title">
+            <img src="images/school-logo.png" alt="Logo de la escuela" class="school-logo">
+            <h1>Escuela Primaria</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="news.html">Noticias</a></li>
+                <li><a href="about.html" class="active">Sobre Nosotros</a></li>
+                <li><a href="courses/1A.html">Cursos</a></li>
+            </ul>
+        </nav>
+        <div class="profile-menu">
+            <button class="profile-button" onclick="toggleProfileMenu()" title="Menú de usuario">
+                <img src="images/default-profile.png" alt="Foto de perfil" id="profileImage">
+            </button>
+            <div class="profile-dropdown" id="profileDropdown">
+                <a href="profile.html" class="profile-dropdown-item">
+                    <i>👤</i>
+                    <div>
+                        <strong>Mi Perfil</strong>
+                        <small style="display: block; opacity: 0.7;">Ver y editar perfil</small>
+                    </div>
+                </a>
+                <a href="settings.html" class="profile-dropdown-item">
+                    <i>⚙️</i>
+                    <div>
+                        <strong>Configuración</strong>
+                        <small style="display: block; opacity: 0.7;">Preferencias de cuenta</small>
+                    </div>
+                </a>
+                <div class="profile-dropdown-divider"></div>
+                <a href="#" class="profile-dropdown-item" onclick="logout(event)">
+                    <i>🚪</i>
+                    <div>
+                        <strong>Cerrar Sesión</strong>
+                        <small style="display: block; opacity: 0.7;">Salir de la cuenta</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main style="max-width: 1200px; margin: 2rem auto; padding: 0 2rem;">
+        <section class="card" style="margin-bottom: 2rem;">
+            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Nuestra Historia</h2>
+            <p style="margin-bottom: 1rem;">
+                Fundada en [año], nuestra escuela ha sido un pilar en la educación primaria de la comunidad. 
+                Nos enorgullece ofrecer una educación integral que combina excelencia académica con desarrollo personal.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                A lo largo de los años, hemos formado a generaciones de estudiantes, 
+                preparándolos no solo académicamente sino también en valores y habilidades para la vida.
+            </p>
+        </section>
+
+        <section class="card" style="margin-bottom: 2rem;">
+            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Nuestra Misión</h2>
+            <p>
+                Proporcionar una educación de calidad que inspire a nuestros estudiantes a alcanzar su máximo potencial,
+                fomentando el pensamiento crítico, la creatividad y los valores éticos en un ambiente inclusivo y estimulante.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Nuestros Valores</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div>
+                    <h3 style="color: var(--secondary-color);">Excelencia</h3>
+                    <p>Buscamos la mejora continua en todo lo que hacemos.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--secondary-color);">Integridad</h3>
+                    <p>Actuamos con honestidad y ética en todas nuestras acciones.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--secondary-color);">Respeto</h3>
+                    <p>Valoramos la diversidad y fomentamos un ambiente de respeto mutuo.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const profileMenu = document.querySelector('.profile-menu');
+            const dropdown = document.getElementById('profileDropdown');
+            
+            if (!profileMenu.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        function logout(event) {
+            event.preventDefault();
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('isAuthenticated');
+                localStorage.removeItem('userProfile');
+                window.location.href = 'auth.html';
+            }
+        }
+
+        function checkAuth() {
+            const isAuthenticated = localStorage.getItem('isAuthenticated');
+            if (!isAuthenticated) {
+                window.location.href = 'auth.html';
+            }
+        }
+
+        function loadProfileImage() {
+            const userProfile = localStorage.getItem('userProfile');
+            if (userProfile) {
+                const profile = JSON.parse(userProfile);
+                if (profile.image) {
+                    document.getElementById('profileImage').src = profile.image;
+                }
+            }
+        }
+
+        window.onload = function() {
+            checkAuth();
+            loadProfileImage();
+        };
+    </script>
+</body>
+</html> 

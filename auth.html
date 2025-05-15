@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login y Registro - Sistema Escolar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"> 
+    <style>  
+        body {  
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);  
+            min-height: 100vh;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+        }  
+
+        .auth-container {  
+            background: rgba(255, 255, 255, 0.98);  
+            border-radius: 25px;  
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);  
+            overflow: visible;  
+            position: relative;  
+            backdrop-filter: blur(10px);  
+            border: 1px solid rgba(255, 255, 255, 0.3);  
+        }  
+
+.school-logo {  
+    width: 200px;  /* Ancho deseado */  
+    height: 200px;  /* Alto deseado */  
+    object-fit: contain;  /* Mantiene la proporción de la imagen */  
+    margin: 2rem 0;  /* Espacio superior e inferior */  
+    border-radius: 15px;  /* Bordes redondeados */  
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);  /* Sombra suave */  
+    display: block !important;  /* Asegura que la imagen se muestre */  
+    visibility: visible !important;  /* Asegura que sea visible */  
+    opacity: 1 !important;  /* Asegura que no esté opaca */  
+    position: relative;  /* Mejor posicionamiento */  
+}
+
+        .auth-header {  
+            text-align: center;  
+            padding: 3rem 2rem;  
+            background: linear-gradient(to right, rgba(26, 35, 126, 0.05) 0%, rgba(13, 71, 161, 0.05) 100%);  
+            margin-bottom: 2.5rem;  
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);  
+        }  
+
+        .auth-header h2 {  
+            color: #1a237e;  
+            font-weight: 700;  
+            margin: 1rem 0;  
+            font-size: 2.2rem;  
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+        }  
+
+        .auth-header p {  
+            color: #546e7a;  
+            font-size: 1.1rem;  
+        }  
+
+        .auth-tabs {  
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);  
+            margin-bottom: 2.5rem;  
+            padding: 0 2rem;  
+        }  
+
+        .auth-tabs .nav-link {  
+            border: none;  
+            color: #546e7a;  
+            padding: 1.2rem 2.5rem;  
+            font-weight: 600;  
+            position: relative;  
+            transition: all 0.3s ease;  
+            background: rgba(0, 0, 0, 0.01);  
+            border-radius: 8px 8px 0 0;  
+        }  
+
+        .auth-tabs .nav-link:hover {  
+            color: #1a237e;  
+            background: rgba(26, 35, 126, 0.05);  
+        }  
+
+        .auth-tabs .nav-link.active {  
+            color: #1a237e;  
+            background: none;  
+        }  
+
+        .auth-tabs .nav-link.active::after {  
+            content: '';  
+            position: absolute;  
+            bottom: -2px;  
+            left: 0;  
+            width: 100%;  
+            height: 4px;  
+            background: linear-gradient(to right, #1a237e, #0d47a1);  
+            transition: transform 0.3s ease;  
+        }  
+
+        .form-floating {  
+            margin-bottom: 1.8rem;  
+            padding: 0.5rem;  
+        }  
+
+        .form-floating input, .form-floating select {  
+            border: 2px solid #e0e0e0;  
+            border-radius: 12px;  
+            padding: 1rem 0.75rem;  
+            height: calc(3.5rem + 2px);  
+            transition: all 0.3s ease;  
+            background: rgba(255, 255, 255, 0.9);  
+        }  
+
+        .form-floating input:focus, .form-floating select:focus {  
+            border-color: #1a237e;  
+            box-shadow: 0 0 0 0.35rem rgba(26, 35, 126, 0.25);  
+            background: rgba(255, 255, 255, 0.95);  
+        }  
+
+        .btn-primary {  
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);  
+            border: none;  
+            padding: 0.8rem 2rem;  
+            font-weight: 600;  
+            border-radius: 12px;  
+            transition: all 0.3s ease;  
+            color: white;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            gap: 0.5rem;  
+        }  
+
+        .btn-primary:hover {  
+            transform: translateY(-2px);  
+            box-shadow: 0 8px 20px rgba(13, 71, 161, 0.3);  
+            background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%);  
+        }  
+
+        .btn-primary:active {  
+            transform: translateY(0);  
+        }  
+
+        .spinner-border {  
+            height: 1.5rem;  
+            width: 1.5rem;  
+        }  
+
+        .alert {  
+            display: none;  
+            margin-top: 1.5rem;  
+            border-radius: 12px;  
+            padding: 1rem;  
+            font-weight: 500;  
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
+        }  
+
+        .alert-success {  
+            background: #c8e6c9;  
+            border: 2px solid #2e7d32;  
+        }  
+
+        .alert-danger {  
+            background: #ffcdd2;  
+            border: 2px solid #c62828;  
+        }  
+
+        .auth-form {  
+            padding: 0 2.5rem 3rem;  
+        }  
+
+        .form-floating label {  
+            padding: 1rem 0.75rem;  
+            font-weight: 500;  
+            color: #1a237e;  
+        }  
+
+        .invalid-feedback {  
+            font-size: 0.85rem;  
+            color: #c62828;  
+        }  
+
+        @media (max-width: 576px) {  
+            .auth-container {  
+                margin: 1rem;  
+                border-radius: 15px;  
+            }  
+
+            .school-logo {  
+                width: 120px;  
+                height: 120px;  
+                margin: 1.5rem 0;  
+            }  
+
+            .auth-header {  
+                padding: 2rem 1.5rem;  
+                text-align: center;  
+            }  
+
+            .auth-header h2 {  
+                font-size: 1.8rem;  
+            }  
+
+            .auth-tabs .nav-link {  
+                padding: 1rem 1.5rem;  
+                font-size: 0.9rem;  
+            }  
+
+            .form-floating {  
+                margin-bottom: 1.5rem;  
+            }  
+        }  
+    </style>  
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <img src="./programaweb/socrates villazon.png" alt="Sócrates Villazón" class="school-logo">
+                        <h2>Sócrates Villazón</h2>
+                        <p class="text-muted">Sistema de Gestión Escolar</p>
+                    </div>
+
+                    <ul class="nav nav-tabs auth-tabs" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#login-content" type="button" role="tab">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#register-content" type="button" role="tab">
+                                <i class="bi bi-person-plus"></i> Registrarse
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="authTabsContent">
+                        <!-- Login Form -->
+                        <div class="tab-pane fade show active" id="login-content" role="tabpanel">
+                            <form id="loginForm" class="auth-form" novalidate>
+                                <input type="hidden" name="action" value="login">
+                                
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="loginEmail" 
+                                           name="email" placeholder="nombre@ejemplo.com" required>
+                                    <label for="loginEmail">Correo electrónico</label>
+                                    <div class="invalid-feedback">
+                                        Por favor ingresa un correo electrónico válido.
+                                    </div>
+                                </div>
+
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="loginPassword" 
+                                           name="password" placeholder="Contraseña" required>
+                                    <label for="loginPassword">Contraseña</label>
+                                    <div class="invalid-feedback">
+                                        Por favor ingresa tu contraseña.
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">
+                                        <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                        Iniciar Sesión
+                                    </button>
+                                </div>
+
+                                <div class="alert alert-danger mt-3" role="alert"></div>
+                            </form>
+                        </div>
+
+                        <!-- Register Form -->
+                        <div class="tab-pane fade" id="register-content" role="tabpanel">
+                            <form id="registerForm" class="auth-form" novalidate>
+                                <input type="hidden" name="action" value="register">
+                                
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="registerName" 
+                                           name="nombre" placeholder="Nombre completo" required>
+                                    <label for="registerName">Nombre completo</label>
+                                    <div class="invalid-feedback">
+                                        Por favor ingresa tu nombre.
+                                    </div>
+                                </div>
+
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="registerEmail" 
+                                           name="email" placeholder="nombre@ejemplo.com" required>
+                                    <label for="registerEmail">Correo electrónico</label>
+                                    <div class="invalid-feedback">
+                                        Por favor ingresa un correo electrónico válido.
+                                    </div>
+                                </div>
+
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="registerPassword" 
+                                           name="password" placeholder="Contraseña" required 
+                                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                                    <label for="registerPassword">Contraseña</label>
+                                    <div class="invalid-feedback">
+                                        La contraseña debe tener al menos 8 caracteres, una letra y un número.
+                                    </div>
+                                </div>
+
+                                <div class="form-floating">
+                                    <select class="form-select" id="registerRole" name="rol" required>
+                                        <option value="">Selecciona un rol</option>
+                                        <option value="profesor">Profesor</option>
+                                        <option value="estudiante">Estudiante</option>
+                                    </select>
+                                    <label for="registerRole">Rol</label>
+                                    <div class="invalid-feedback">
+                                        Por favor selecciona un rol.
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">
+                                        <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                        Registrarse
+                                    </button>
+                                </div>
+
+                                <div class="alert alert-danger mt-3" role="alert"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function handleFormSubmit(formId) {
+            const form = document.getElementById(formId);
+            
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    this.classList.add('was-validated');
+                    return;
+                }
+
+                const submitButton = this.querySelector('button[type="submit"]');
+                const spinner = submitButton.querySelector('.spinner-border');
+                const alertElement = this.querySelector('.alert');
+                
+                submitButton.disabled = true;
+                spinner.classList.remove('d-none');
+                alertElement.style.display = 'none';
+
+                try {
+                    const formData = new FormData(this);
+                    const response = await fetch('includes/auth.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+
+
+if (data.success) {
+    if (formId === 'loginForm') {
+        // Redirección basada en el rol del usuario
+        const rol = data.user_role || 'estudiante';
+        switch(rol) {
+            case 'profesor':
+                window.location.href = './programaweb/teacher_panel.html';
+                break;
+            case 'estudiante':
+                window.location.href = './programaweb/index.html'; // Asegúrate de que esta ruta exista
+                break;
+            case 'admin':
+                window.location.href = 'programaweb/admin_panel.html';
+                break;
+            default:
+                window.location.href = 'programaweb/index.html';
+        }
+    } else {
+        alertElement.className = 'alert alert-success';
+        alertElement.textContent = data.message;
+        alertElement.style.display = 'block';
+        this.reset();
+        this.classList.remove('was-validated');
+        setTimeout(() => {
+            document.getElementById('login-tab').click();
+        }, 2000);
+    }
+} else {
+
+                        alertElement.className = 'alert alert-danger';
+                        alertElement.textContent = data.message;
+                        alertElement.style.display = 'block';
+                    }
+                } catch (error) {
+                    alertElement.className = 'alert alert-danger';
+                    alertElement.textContent = 'Error al conectar con el servidor';
+                    alertElement.style.display = 'block';
+                } finally {
+                    submitButton.disabled = false;
+                    spinner.classList.add('d-none');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            handleFormSubmit('loginForm');
+            handleFormSubmit('registerForm');
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Escuela Primaria</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        .admin-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            background: white;
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu a:hover {
+            background: var(--background-light);
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .sidebar-menu i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .recent-activity {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .activity-info {
+            flex: 1;
+        }
+
+        .activity-time {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-button:hover {
+            background: var(--background-light);
+            border-color: var(--primary-color);
+        }
+
+        .action-icon {
+            margin-right: 0.75rem;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .tab-container {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-container">
+        <div class="logo-title">
+            <img src="images/school-logo.png" alt="Logo de la escuela" class="school-logo">
+            <h1>Panel de Administración</h1>
+        </div>
+        <div class="profile-menu">
+            <button class="profile-button" onclick="toggleProfileMenu()" title="Menú de usuario">
+                <img src="images/default-profile.png" alt="Foto de perfil" id="profileImage">
+            </button>
+            <div class="profile-dropdown" id="profileDropdown">
+                <a href="profile.html" class="profile-dropdown-item">
+                    <i>👤</i>
+                    <div>
+                        <strong>Mi Perfil</strong>
+                        <small style="display: block; opacity: 0.7;">Ver y editar perfil</small>
+                    </div>
+                </a>
+                <div class="profile-dropdown-divider"></div>
+                <a href="#" class="profile-dropdown-item" onclick="logout(event)">
+                    <i>🚪</i>
+                    <div>
+                        <strong>Cerrar Sesión</strong>
+                        <small style="display: block; opacity: 0.7;">Salir de la cuenta</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active" onclick="showTab('dashboard')"><i>📊</i> Dashboard</a></li>
+                <li><a href="#students" onclick="showTab('students')"><i>👥</i> Estudiantes</a></li>
+                <li><a href="#teachers" onclick="showTab('teachers')"><i>👨‍🏫</i> Profesores</a></li>
+                <li><a href="#courses" onclick="showTab('courses')"><i>📚</i> Cursos</a></li>
+                <li><a href="#calendar" onclick="showTab('calendar')"><i>📅</i> Calendario</a></li>
+                <li><a href="#reports" onclick="showTab('reports')"><i>📈</i> Reportes</a></li>
+                <li><a href="#settings" onclick="showTab('settings')"><i>⚙️</i> Configuración</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-container active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Estudiantes</div>
+                        <div class="stat-value">500</div>
+                        <div class="stat-change">+5% este mes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Profesores</div>
+                        <div class="stat-value">30</div>
+                        <div class="stat-change">+2 nuevas contrataciones</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Asistencia Promedio</div>
+                        <div class="stat-value">95%</div>
+                        <div class="stat-change">+2% vs mes anterior</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Eventos Próximos</div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-change">Próximos 30 días</div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="action-button" onclick="showTab('students')">
+                        <span class="action-icon">➕</span>
+                        <span>Nuevo Estudiante</span>
+                    </button>
+                    <button class="action-button" onclick="showTab('calendar')">
+                        <span class="action-icon">📅</span>
+                        <span>Programar Evento</span>
+                    </button>
+                    <button class="action-button" onclick="showTab('reports')">
+                        <span class="action-icon">📊</span>
+                        <span>Generar Reporte</span>
+                    </button>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Actividad Reciente</h3>
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #e3f2fd; color: #1565c0;">📝</div>
+                        <div class="activity-info">
+                            <div>Nuevo estudiante registrado</div>
+                            <div class="activity-time">Hace 2 horas</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #fce4ec; color: #c2185b;">📊</div>
+                        <div class="activity-info">
+                            <div>Reporte mensual generado</div>
+                            <div class="activity-time">Hace 5 horas</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #f3e5f5; color: #7b1fa2;">📅</div>
+                        <div class="activity-info">
+                            <div>Evento escolar programado</div>
+                            <div class="activity-time">Hace 1 día</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Tabs (placeholder content) -->
+            <div id="students" class="tab-container">
+                <h2>Gestión de Estudiantes</h2>
+                <!-- Contenido de estudiantes -->
+            </div>
+
+            <div id="teachers" class="tab-container">
+                <h2>Gestión de Profesores</h2>
+                <!-- Contenido de profesores -->
+            </div>
+
+            <div id="courses" class="tab-container">
+                <h2>Gestión de Cursos</h2>
+                <!-- Contenido de cursos -->
+            </div>
+
+            <div id="calendar" class="tab-container">
+                <h2>Calendario Escolar</h2>
+                <!-- Contenido del calendario -->
+            </div>
+
+            <div id="reports" class="tab-container">
+                <h2>Reportes y Estadísticas</h2>
+                <!-- Contenido de reportes -->
+            </div>
+
+            <div id="settings" class="tab-container">
+                <h2>Configuración del Sistema</h2>
+                <!-- Contenido de configuración -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const profileMenu = document.querySelector('.profile-menu');
+            const dropdown = document.getElementById('profileDropdown');
+            
+            if (!profileMenu.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        function logout(event) {
+            event.preventDefault();
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                window.location.href = 'includes/logout.php';
+            }
+        }
+
+        function showTab(tabId) {
+            // Actualizar menú lateral
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + tabId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Mostrar contenido de la pestaña
+            document.querySelectorAll('.tab-container').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function checkAuth() {
+            // Aquí deberías verificar si el usuario es administrador
+            const isAdmin = localStorage.getItem('isAdmin');
+            if (!isAdmin) {
+                window.location.href = 'auth.html';
+            }
+        }
+
+        function loadProfileImage() {
+            const userProfile = localStorage.getItem('userProfile');
+            if (userProfile) {
+                const profile = JSON.parse(userProfile);
+                if (profile.image) {
+                    document.getElementById('profileImage').src = profile.image;
+                }
+            }
+        }
+
+        window.onload = function() {
+            checkAuth();
+            loadProfileImage();
+        };
+    </script>
+</body>
+</html> 
